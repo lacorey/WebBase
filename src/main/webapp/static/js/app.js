@@ -1,70 +1,34 @@
-var routerApp = angular.module('routerApp', ['ui.router']);
+var App = angular.module('myApp', ['ui.router']);
+App.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
-routerApp.config(function($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise("/home")
 
-    $urlRouterProvider.otherwise('/home');
     $stateProvider
-
-    // HOME STATES AND NESTED VIEWS ========================================
-        .state('user', {
-            url: '/user',
-            templateUrl: 'tpluser.html',
-            controller: 'userController',
-            resolve:{
-                promiseObj2:  function($http){
-                    return $http({method: 'GET', url: '/listuser'})
-                        .then (function (data) {
-                            console.log(data);
-                            return data;
-                        });
-                },
-            }
-        })
-
-        // nested list with custom controller
-        .state('data', {
-            url: '/data',
-            templateUrl: 'tpldata.html'
-        })
-
-        // nested list with just some random string data
-        .state('export', {
-            url: '/export',
-            templateUrl: 'tplexport.html'
-        })
-
-        // ABOUT PAGE AND MULTIPLE NAMED VIEWS =================================
-        .state('about', {
-            url: '/about',
-            views: {
-                '': { templateUrl: 'partial-about.html' },
-                'columnOne@about': { template: 'Look I am a column!' },
-                'columnTwo@about': {
-                    templateUrl: 'table-data.html',
-                    controller: 'scotchController'
+        .state(
+            'user', {
+                url: "/user",
+                templateUrl: 'tpl_user.html',
+                controller: 'UserController as userController',
+                resolve: {
+                    async: ['UserService', function (UserService) {
+                        return UserService.fetchUserList();
+                    }]
                 }
+            })
+
+        .state(
+            'data', {
+                url: '/data',
+                templateUrl: 'tpl_data.html'
             }
+        )
 
-        });
-});
+        .state(
+            'export', {
+                url: "/export",
+                templateUrl: 'tpl_export.html'
+            }
+        )
 
-//routerApp.controller('scotchController', function($scope) {
-//
-//    $scope.message = 'test';
-//
-//    $scope.scotches = [
-//        {
-//            name: 'Macallan 12',
-//            price: 50
-//        },
-//        {
-//            name: 'Chivas Regal Royal Salute',
-//            price: 10000
-//        },
-//        {
-//            name: 'Glenfiddich 1937',
-//            price: 20000
-//        }
-//    ];
-//
-//});
+
+}]);

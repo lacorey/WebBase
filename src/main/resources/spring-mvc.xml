@@ -38,6 +38,8 @@
     <!-- 静态资源访问处理 -->
     <mvc:resources mapping="/css/**" location="/static/css/" />
     <mvc:resources mapping="/js/**" location="/static/js/" />
+    <mvc:resources mapping="/js/controller/**" location="/static/js/controller" />
+    <mvc:resources mapping="/js/service/**" location="/static/js/service" />
     <mvc:resources mapping="/fonts/**" location="/static/fonts/" />
     <mvc:resources mapping="/html/**" location="/static/html/" />
 

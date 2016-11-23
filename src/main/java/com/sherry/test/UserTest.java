@@ -24,9 +24,12 @@ public class UserTest extends AbstractJUnit4SpringContextTests {
 
     @Test
     public void testInsertUser() {
-        User user = new User();
-        user.setUsername("开开心心的来");
-        userMapper.insert(user);
+        for(int i=0;i<20;i++){
+            User user = new User();
+            user.setUsername("高中生"+i);
+            user.setAddress("清华"+i);
+            userMapper.insert(user);
+        }
     }
 
 }
