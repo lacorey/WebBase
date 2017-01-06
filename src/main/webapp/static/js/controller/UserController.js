@@ -1,38 +1,37 @@
-//todo 使用$scope 还是 this 有待考证
-App.controller('UserController', ['async','$log', function (async,$log) {
-    var self = this;
-    self.users = async;
-    self.totalItems = 64;
-    self.currentPage = 1;
-
-    self.setPage = function (pageNo) {
-        currentPage = pageNo;
-        $log.log('Page click to: ' + self.currentPage);
+App.controller('UserController', ['$http','$scope','$stateParams','$log', function ($http,$scope,$stateParams,$log) {
+    $scope.currentPage = 1;
+    $scope.test = "test";
+    $scope.setPage = function (pageNo) {
+        $log.log('Page setPage to: ' + pageNo);
+        $scope.currentPage = pageNo;
     };
 
-    self.pageChanged = function() {
-        $log.log('Page changed to: ' + self.currentPage);
+    $scope.pageChanged = function() {
+        $log.log('Page changed to: ' + $scope.currentPage);
+        $scope.fetchUserList($scope.currentPage);
     };
 
-    self.maxSize = 5;
-    self.bigTotalItems = 175;
-    self.bigCurrentPage = 1;
+    $scope.fetchUserList = function(page){
+        $http.get('/listuser?page='+page).success(function (response) {
+            $scope.users = response.data;
+            $scope.totalItems = response.count;
+            return response;
+        });
+    }
+
+    $scope.page = $stateParams.page;
+    $scope.fetchUserList($scope.page);
+
+
+    $scope.deleteUser = function(id){
+        $http.get('/deleteuser?id='+id).success(function (response) {
+            var delStatus = response.status;
+            if(delStatus == 1){
+                $scope.fetchUserList($scope.page);
+            }
+        });
+    }
+
+
 }]);
 
-//App.controller('UserController', function ($scope, $log) {
-//    $scope.totalItems = 64;
-//    $scope.currentPage = 1;
-//
-//    $scope.setPage = function (pageNo) {
-//        $scope.currentPage = pageNo;
-//        $log.log('Page click to: ' + $scope.currentPage);
-//    };
-//
-//    $scope.pageChanged = function() {
-//        $log.log('Page changed to: ' + $scope.currentPage);
-//    };
-//
-//    $scope.maxSize = 5;
-//    $scope.bigTotalItems = 175;
-//    $scope.bigCurrentPage = 1;
-//});

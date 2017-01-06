@@ -3,6 +3,7 @@ package com.sherry.test;
 import com.sherry.mapper.UserMapper;
 import com.sherry.model.User;
 import org.junit.runner.RunWith;
+import org.springframework.jca.cci.core.InteractionCallback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
@@ -30,6 +31,13 @@ public class UserTest extends AbstractJUnit4SpringContextTests {
             user.setAddress("清华"+i);
             userMapper.insert(user);
         }
+    }
+
+    @Test
+    public void deletePriFriends() {
+        System.out.println(userMapper);
+        Integer index = userMapper.deleteUser(26);
+        System.out.println(index);
     }
 
 }

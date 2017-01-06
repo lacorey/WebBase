@@ -22,6 +22,11 @@ public interface UserMapper {
      */
     public int insert(User record);
 
-    public List<Map> listUser();
+    public List<Map> listUser(Map<String,Object> map);
+
+    public int getUserCount();
+
+    public Integer deleteUser(int id);
+
 
 }

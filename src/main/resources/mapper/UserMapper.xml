@@ -13,7 +13,15 @@
         )
     </insert>
 
-    <select id="listUser" resultType="CamelbakKeyResultMap">
-        select * from user limit 0,10
+    <select id="listUser" parameterType="HashMap" resultType="CamelbakKeyResultMap">
+        select * from user limit #{start},#{end}
     </select>
+
+    <select id="getUserCount" parameterType="int" resultType="int">
+        select count(*) from user
+    </select>
+
+    <delete id="deleteUser" parameterType="int" >
+        delete from user where id = #{id}
+    </delete>
 </mapper>
