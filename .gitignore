@@ -12,3 +12,8 @@
 hs_err_pid*
 .idea
 /.idea
+
+.DS_Store
+src/.DS_Store
+src/main/java/com/sherry/.DS_Store
+src/main/webapp/static/js/.DS_Store

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="http://files.cnblogs.com/Zjmainstay/jquery-1.6.2.min.js"></script>
+</head>
+
+<body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //选择文件成功则提交表单
+        $("#myfile").change(function () {
+            if ($("#myfile").val() != '') $("#submit_form").submit();
+        });
+    });
+
+</script>
+
+
+<form id="submit_form" method="post" action="/uploadPic" target="exec_target"
+      enctype="multipart/form-data">
+    <input type="file" name="myfile" id="myfile">        <!-- 添加上传文件 -->
+</form>
+
+</body>
+</html>
